@@ -25,7 +25,7 @@ export const getRepoList = (owner: string, page = 1) => {
     if (tmpList && tmpList.length) {
       resolve(
         tmpList
-          .filter((v: any) => !v.fork && !v.private)
+          .filter((v: any) => !v.private)
           .map((x: any) => ({
             value: x.name,
             label: x.name
