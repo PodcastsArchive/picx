@@ -11,6 +11,10 @@
         {{ CompressEncoderEnum.webP }}
         <span class="desc">{{ $t('settings.img_compress.radio_1_desc') }}</span>
       </el-radio>
+      <el-radio :label="CompressEncoderEnum.jpegEXIF">
+        {{ CompressEncoderEnum.jpegEXIF }}
+        <span class="desc">{{ $t('settings.img_compress.radio_2_desc') }} (added by lfkdsk)</span>
+      </el-radio>
       <el-radio :label="CompressEncoderEnum.mozJPEG">
         {{ CompressEncoderEnum.mozJPEG }}
         <span class="desc">{{ $t('settings.img_compress.radio_2_desc') }}</span>

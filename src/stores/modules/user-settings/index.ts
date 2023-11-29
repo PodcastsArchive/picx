@@ -22,7 +22,7 @@ const initSettings: UserSettingsModel = {
   },
   compress: {
     enable: true,
-    encoder: CompressEncoderEnum.webP
+    encoder: CompressEncoderEnum.jpegEXIF
   },
   theme: {
     mode: ThemeModeEnum.system
