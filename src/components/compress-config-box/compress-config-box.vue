@@ -9,19 +9,15 @@
     >
       <el-radio :label="CompressEncoderEnum.webP">
         {{ CompressEncoderEnum.webP }}
-        <span class="desc">{{ $t('settings.img_compress.radio_1_desc') }}</span>
-      </el-radio>
-      <el-radio :label="CompressEncoderEnum.jpegEXIF">
-        {{ CompressEncoderEnum.jpegEXIF }}
-        <span class="desc">{{ $t('settings.img_compress.radio_2_desc') }} (added by lfkdsk)</span>
+        <span class="desc">{{ $t('settings.img_compress.radio_1_desc') }} (EXIF added by lfkdsk)</span>
       </el-radio>
       <el-radio :label="CompressEncoderEnum.mozJPEG">
         {{ CompressEncoderEnum.mozJPEG }}
-        <span class="desc">{{ $t('settings.img_compress.radio_2_desc') }}</span>
+        <span class="desc">{{ $t('settings.img_compress.radio_2_desc') }} (EXIF added by lfkdsk)</span>
       </el-radio>
       <el-radio :label="CompressEncoderEnum.avif">
         {{ CompressEncoderEnum.avif }}
-        <span class="desc">{{ $t('settings.img_compress.radio_3_desc') }}</span>
+        <span class="desc">{{ $t('settings.img_compress.radio_3_desc') }} (EXIF added by lfkdsk)</span>
       </el-radio>
     </el-radio-group>
   </div>

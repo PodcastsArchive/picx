@@ -8,6 +8,7 @@ import {
 } from '@yireen/squoosh-browser/dist/client/lazy-app/feature-meta'
 import { CompressEncoderEnum } from '@/common/model'
 import { isNeedCompress } from '@/utils/file-utils'
+import { insert, load, dump } from '@asc0910/exif-library'
 
 /**
  * 压缩图片
@@ -19,20 +20,6 @@ export const compressImage = async (file: File, encoder: CompressEncoderEnum) =>
     return file
   }
 
-  if (encoder === CompressEncoderEnum.jpegEXIF) {
-    return new Promise((resolve, reject) => {
-      imageCompression(file, { initialQuality: 0.8, preserveExif: true, fileType: 'image/jpeg' })
-        .then(function (compressedFile) {
-          const jpeg = new File([compressedFile], file.name.replace(/\.[^/.]+$/, '.jpeg'))
-          return resolve(jpeg)
-        })
-        .catch(function (error) {
-          console.log(error.message)
-          reject(error.message)
-        })
-    })
-  }
-
   const compress = new Compress(file, {
     encoderState: {
       type: encoder,
@@ -41,5 +28,38 @@ export const compressImage = async (file: File, encoder: CompressEncoderEnum) =>
     processorState: defaultProcessorState,
     preprocessorState: defaultPreprocessorState
   })
-  return compress.process()
+
+  function readFileAsString(file: File) {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+
+      reader.onload = () => {
+        resolve(reader.result as string)
+      }
+
+      reader.onerror = () => {
+        reader.abort()
+        reject(new DOMException('Problem parsing input file.'))
+      }
+
+      reader.readAsBinaryString(file)
+    })
+  }
+
+  function writeFileWithBuffer(data: string) {
+    const len = data.length
+    const bytes = new Uint8Array(len)
+    for (let i = 0; i < len; i++) {
+      bytes[i] = data.charCodeAt(i)
+    }
+    return bytes
+  }
+
+  const data = await readFileAsString(file)
+  const result = await compress.process()
+  const originEXIF = load(data)
+  console.log(originEXIF)
+  const newData = await readFileAsString(result)
+  const newDataWithEXIF = insert(dump(originEXIF), newData)
+  return new File([writeFileWithBuffer(newDataWithEXIF)], result.name, { type: result.type })
 }

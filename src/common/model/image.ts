@@ -99,8 +99,6 @@ export enum CompressEncoderEnum {
   avif = 'avif',
   // eslint-disable-next-line no-unused-vars
   webP = 'webP',
-  // eslint-disable-next-line no-unused-vars
-  jpegEXIF = 'jpegEXIF'
 }
 
 /**
