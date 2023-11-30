@@ -8,7 +8,7 @@ import {
 } from '@yireen/squoosh-browser/dist/client/lazy-app/feature-meta'
 import { CompressEncoderEnum } from '@/common/model'
 import { isNeedCompress } from '@/utils/file-utils'
-import { insert, load, dump } from '@asc0910/exif-library'
+import { insert, load, dump } from '@lfkdsk/exif-library'
 
 /**
  * 压缩图片
