@@ -57,9 +57,14 @@ export const compressImage = async (file: File, encoder: CompressEncoderEnum) =>
 
   const data = await readFileAsString(file)
   const result = await compress.process()
-  const originEXIF = load(data)
-  console.log(originEXIF)
-  const newData = await readFileAsString(result)
-  const newDataWithEXIF = insert(dump(originEXIF), newData)
-  return new File([writeFileWithBuffer(newDataWithEXIF)], result.name, { type: result.type })
+  try {
+    const originEXIF = load(data)
+    console.log(originEXIF)
+    const newData = await readFileAsString(result)
+    const newDataWithEXIF = insert(dump(originEXIF), newData)
+    return new File([writeFileWithBuffer(newDataWithEXIF)], result.name, { type: result.type })  
+  } catch (error) {
+    console.error(error);
+    return result;
+  }
 }
