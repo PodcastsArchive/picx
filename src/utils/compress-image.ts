@@ -8,7 +8,7 @@ import {
 } from '@yireen/squoosh-browser/dist/client/lazy-app/feature-meta'
 import { CompressEncoderEnum } from '@/common/model'
 import { isNeedCompress } from '@/utils/file-utils'
-import { insert, load, dump } from '@lfkdsk/exif-library'
+import { insert, load, dump, TagNumbers } from '@lfkdsk/exif-library'
 
 /**
  * 压缩图片
@@ -60,9 +60,13 @@ export const compressImage = async (file: File, encoder: CompressEncoderEnum) =>
   try {
     const originEXIF = load(data)
     console.log(originEXIF)
+    if (TagNumbers.ImageIFD.Orientation in originEXIF["0th"]) {
+          delete originEXIF["0th"][TagNumbers.ImageIFD.Orientation];
+    }
     const newData = await readFileAsString(result)
     const newDataWithEXIF = insert(dump(originEXIF), newData)
     return new File([writeFileWithBuffer(newDataWithEXIF)], result.name, { type: result.type })  
+    // return result;
   } catch (error) {
     console.error(error);
     return result;
